@@ -1,0 +1,66 @@
+<nav class="navbar">
+  <ul class="menu">
+      <li><a href="#">Inicio</a></li>
+      <li><a href="#">Servicios</a></li>
+      <li><a href="#">Productos</a></li>
+      <li><a href="#">Contacto</a></li>
+  </ul>
+  <img src="assets/img/logo.png" alt="Logo" class="logo"> 
+</nav>
+
+
+<div class="container">
+
+  <div  class="box">
+    <input type="text" [formControl]="myInput" placeholder="Ingresa el id del producto...">
+    <button (click)="search()">BUSCAR</button>
+  </div>
+  
+
+    <div *ngIf="noData; else dataTable">
+      <p class="no-data-message">No hay registros disponibles.</p>
+    </div>
+
+  <div>
+    <ng-template #dataTable>
+    <table *ngIf="op.length >0" class="custom-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Slug</th>
+          <th>Precio</th>
+          <th>Impuesto</th>
+          <th>Descripción</th>
+          <th>Categoría</th>
+          <th>Imagen</th>
+          <th>Creado</th>
+          <th>Actualizado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of op; track product.id) {
+          <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.title }}</td>
+            <td>{{ product.slug }}</td>
+            <td>{{ product.price  }}</td>
+            <td>{{ product.tax  }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.category.name }}</td>
+            <div *ngFor="let image of product.images; let i = index">
+              <img [src]="image" width="50">
+            </div>
+            <td>{{ product.creationAt }}</td>
+            <td>{{ product.updatedAt }}</td>
+          </tr>
+        }
+  
+      </tbody>
+    </table>
+  </ng-template>
+  </div>
+  
+</div>
+
+
